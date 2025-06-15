@@ -140,7 +140,7 @@ app.post("/auth", async (req, res) => {
             res.redirect(`/home/${username}`);
         } else {
             // Password incorrect
-            return res.render('error.ejs', { status: 401 ,error: 'Invalid credentials' });
+            return res.render('error.ejs', { status: 401 ,error: 'Invalid credentials. Please enter correct password.' });
         }
     } catch (error) {
         console.error('Error during login:', error);
@@ -160,7 +160,7 @@ app.post("/register", async (req, res) => {
         res.redirect(`/home/${username}`);
     } catch (error) {
         console.error('Error during registration:', error);
-        res.render('error.ejs', { status: 500 ,error: 'Registration failed' });
+        res.render('error.ejs', { status: 403 ,error: 'Registration failed! Username already in use.' });
     }
 })
 
