@@ -116,7 +116,9 @@
   .h2-4-lg{
     font-size: 1.5rem;
   }
-  
+  .h1-1-lg{
+    font-size: 3rem;
+  }
 }
 
 @media (max-width: 600px){
@@ -128,5 +130,8 @@
   }
   .text-2{
     font-size: 1rem;
+  }
+  .h1-1-lg{
+    font-size: 2rem;
   }
 }

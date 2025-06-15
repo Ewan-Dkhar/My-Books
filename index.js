@@ -17,6 +17,7 @@ const db = new pg.Client({
 db.connect();
 
 let currentUserId;
+let currentUsername;
 let isMatch = false;
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -54,7 +55,7 @@ app.get("/new/:username", async (req, res) => {
             res.render("new.ejs", {userId: result.rows[0].id, username})
         } catch (error) {
             console.log("Error:", error)
-            res.send(500).json({ error: 'Server error' })
+            res.render('error.ejs', { status: 500, error: 'Server error' });
         }
     } else{
         res.redirect("/login");
@@ -74,7 +75,7 @@ app.get("/books/:username/:bookId", async (req, res) => {
         }
     } catch (error) {
         console.error('Error during Searching:', error);
-        res.status(404).json({ error: 'Book not found' });
+        res.render('error.ejs', { status: 404, error: 'Book not found' });
     }
 });
 
@@ -91,14 +92,14 @@ app.get("/edit/:username/:bookId", async (req, res) => {
         }
     } catch (error) {
         console.error('Error during Searching:', error);
-        res.status(404).json({ error: 'Book not found' });
+        res.render('error.ejs', { status: 404, error: 'Book not found' });
     }
 });
 
 app.get("/home/:username", async (req, res) => {
     const username = req.params.username;
 
-    if(isMatch){
+    if(isMatch && username === currentUsername){
         try {
             const result =  await db.query("SELECT books.id, books.title, books.author, books.notes, books.summary, books.rating, books.review, books.isbn, users.name, users.id AS uid, users.username FROM books JOIN users ON users.id = books.user_id WHERE username = $1", [username]);
             
@@ -120,7 +121,7 @@ app.post("/auth", async (req, res) => {
         const result = await db.query("SELECT * FROM users WHERE username = $1", [username]);
 
         if(result.rows.length === 0){
-            return res.render('notFound.ejs');
+            return res.render('notFound.ejs', {username});
         }
 
         const storedHashedPassword = result.rows[0].password;
@@ -129,14 +130,15 @@ app.post("/auth", async (req, res) => {
         if (isMatch) {
             // User authenticated successfully
             currentUserId = result.rows[0].id;
+            currentUsername = username;
             res.redirect(`/home/${username}`);
         } else {
             // Password incorrect
-            res.status(401).json({ error: 'Invalid credentials' });
+            return res.render('error.ejs', { status: 401 ,error: 'Invalid credentials' });
         }
     } catch (error) {
         console.error('Error during login:', error);
-        res.status(500).json({ error: 'Login failed' });
+        res.render('error.ejs', { status: 500 ,error: 'Login failed' });
     }
 })
 
@@ -148,10 +150,11 @@ app.post("/register", async (req, res) => {
         const result = await db.query("INSERT INTO users (name, username, password) VALUES ($1, $2, $3) RETURNING id", [name, username, hashedPassword])
         currentUserId = result.rows[0].id;
         isMatch = true;
+        currentUsername = username;
         res.redirect(`/home/${username}`);
     } catch (error) {
         console.error('Error during registration:', error);
-        res.status(500).json({ error: 'Registration failed' });
+        res.render('error.ejs', { status: 500 ,error: 'Registration failed' });
     }
 })
 
@@ -165,7 +168,7 @@ app.post("/add/:username", async (req, res) => {
             res.redirect(`/home/${username}`)
         } catch (error) {
             console.error('Error during creation:', error);
-            res.status(500).json({ error: 'Creation failed' });
+            res.render('error.ejs', { status: 500 ,error: "Couldn't create new post." });
         }
     } else {
         res.redirect('/login');
@@ -183,7 +186,7 @@ app.post("/edit/:username", async (req, res) => {
             res.redirect(`/home/${username}`)
         } catch (error) {
             console.error('Error during edit:', error);
-            res.status(500).json({ error: 'Edit failed' });
+            res.render('error.ejs', { status: 500 ,error: "Couldn't edit post." });
         }
     } else {
         res.redirect('/login');
