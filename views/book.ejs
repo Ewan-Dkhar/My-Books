@@ -1,0 +1,30 @@
+<%- include('./partials/header.ejs') %>
+<body>
+    <div class="container-2">
+        <header id="navbar">
+            <a href="/home/<%= username %>"><h1 class="h1-2-lg">My Books</h1></a>
+            <a href="/edit/<%= username %>/<%= book.id %>"><button class="btn-2 flex item-center gap-5">Edit <span class="text-2">+</span></button></a>
+        </header>
+        <div class="flex-container mb-50">
+            <img src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg" alt="if image is not displaying then the isbn must be incorrect. Please edit it." class="img-l img-shadow">
+            <div class="">
+                <h2 class="h2-3-lg capitalized"><%= book.title %></h2>
+                <h3 class="h3-3-lg capitalized mb-20"><%= book.author %></h3>
+                <h2 class="h2-4-lg">Summary</h2>
+                <p class="text-para mb-30"><%= book.summary %></p>
+                <h2 class="h2-4-lg">Rating: <span class="text-light-lg"><%= book.rating %>/10</span></h2>
+            </div>
+        </div>
+        <div class="">
+            <h2 class="h2-4-lg">Notes</h2>
+            <div class="container-2">
+                <p class="text-para mb-30"><%= book.notes %></p>
+            </div>
+            <h2 class="h2-4-lg">Review</h2>
+            <div class="container-2">
+                <p class="text-para mb-30"><%= book.review %></p>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('./partials/footer.ejs') %>

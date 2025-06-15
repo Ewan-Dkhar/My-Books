@@ -1,0 +1,18 @@
+<%- include('./partials/header.ejs') %>
+<body>
+    
+    <form action="/auth" method="post" class="container-1" autocomplete="off">
+        <h1 class="h1-1-lg mb-20">My Books</h1>
+        <div id="login-box" class="mb-10">
+            <h2 class="h2-1-lg mb-30 align-center">Please enter your username and password</h2>
+            <label for="username" class="text-1-lg">username</label>
+            <input type="text" name="username" id="username" class="input-box" required>
+            <label for="password" class="text-1-lg">password</label>
+            <input type="password" name="password" id="password" class="input-box" required>
+        </div>
+        <a href="/signup" class="mb-30 text-sm">don't have an account yet?</a>
+        <button class="btn-1" type="submit">Login</button>
+    </form>
+    
+</body>
+<%- include('./partials/footer.ejs') %>

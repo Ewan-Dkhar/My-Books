@@ -1,0 +1,93 @@
+<%- include('./partials/header.ejs') %>
+<body>
+    <div class="container-2">
+        <header id="navbar">
+            <a href="/home/<%= username %>"><h1 class="h1-2-lg">My Books</h1></a>
+        </header> 
+        <% if(locals.edit === true){ %>
+            <form action="/edit/<%= username %>" method="post" class="flex flex-column" autocomplete="off">
+                <input type="hidden" name="userId" value="<%= book.user_id %>">
+                <input type="hidden" name="bookId" value="<%= bookId %>">
+                <div class="flex-container item-center gap-50 mb-50">
+                    <div class="flex flex-column">
+                        <label for="title" class="h3-3-lg">Title</label>
+                        <input type="text" name="title" id="title" class="input-box" value="<%= book.title %>" required>
+                        <label for="author" class="h3-3-lg">Author</label>
+                        <input type="text" name="author" id="author" class="input-box" value="<%= book.author %>" required>
+                        <label for="isbn" class="h3-3-lg">ISBN</label>
+                        <input type="text" name="isbn" id="isbn" class="input-box" value="<%= book.isbn %>" required>
+                        <span class="text-sm-1">* ISBN can be found on the back cover of your book above the barcode</span>
+                    </div>
+                    <div class="flex item-center gap-10">
+                        <label for="rating" class="h3-3-lg">Rating:</label>
+                        <select id="rating" name="rating" data-rating="<%= book.rating %>">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="summary" class="h3-3-lg">Summary</label>
+                <textarea name="summary" id="summary" class="textarea-input-box mb-30" required><%= book.summary %></textarea>
+                <label for="notes" class="h3-3-lg">Notes</label>
+                <textarea name="notes" id="notes" class="textarea-input-box mb-30" required><%= book.notes %></textarea>
+                <label for="review" class="h3-3-lg">Review</label>
+                <textarea name="review" id="review" class="textarea-input-box mb-30" required><%= book.review %></textarea>
+                <button type="submit" class="btn-4">Submit</button>
+            </form>
+        <% } else { %>
+            <form action="/add/<%= username %>" method="post" class="flex flex-column" autocomplete="off">
+                <input type="hidden" name="userId" value="<%= userId %>">
+                <div class="flex-container item-center gap-50 mb-50">
+                    <div class="flex flex-column">
+                        <label for="title" class="h3-3-lg">Title</label>
+                        <input type="text" name="title" id="title" class="input-box" required>
+                        <label for="author" class="h3-3-lg">Author</label>
+                        <input type="text" name="author" id="author" class="input-box" required>
+                        <label for="isbn" class="h3-3-lg">ISBN</label>
+                        <input type="text" name="isbn" id="isbn" class="input-box" required>
+                        <span class="text-sm-1">* ISBN can be found on the back cover of your book above the barcode</span>
+                    </div>
+                    <div class="flex item-center gap-10">
+                        <label for="rating" class="h3-3-lg">Rating:</label>
+                        <select id="rating" name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+                <label for="summary" class="h3-3-lg">Summary</label>
+                <textarea name="summary" id="summary" class="textarea-input-box mb-30" required></textarea>
+                <label for="notes" class="h3-3-lg">Notes</label>
+                <textarea name="notes" id="notes" class="textarea-input-box mb-30" required></textarea>
+                <label for="review" class="h3-3-lg">Review</label>
+                <textarea name="review" id="review" class="textarea-input-box mb-30" required></textarea>
+                <button type="submit" class="btn-4">Submit</button>
+            </form>
+        <% } %>
+    </div>
+
+    <script>
+        const rating = document.querySelector("#rating");
+        const rate = rating.dataset.rating
+        if(rate){
+            rating.selectedIndex = parseInt(rate) - 1;
+        }
+    </script>
+</body>
+<%- include('./partials/footer.ejs') %>
