@@ -6,6 +6,8 @@ import 'dotenv/config'
 
 const app = express();
 const port = 3000;
+
+// Connecting to database
 const db = new pg.Client({
     user: "postgres",
     password: process.env.DATABASE_PASSWORD,
@@ -16,19 +18,23 @@ const db = new pg.Client({
 
 db.connect();
 
+// Global variables
 let currentUserId;
 let currentUsername;
 let isMatch = false;
 
+// Middleware
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+// A function that creates a hash of a password using bcrypt
 async function hashPassword(password) {
   const saltRounds = 10; // Recommended value, adjust as needed
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   return hashedPassword;
 }
 
+// A function that compares the password with the hashed paassword and returns a boolean
 async function verifyPassword(password, hashedPassword) {
   const isMatch = await bcrypt.compare(password, hashedPassword);
   return isMatch;
