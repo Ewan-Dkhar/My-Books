@@ -3,7 +3,10 @@
     <div class="container-2">
         <header id="navbar">
             <a href="/home/<%= username %>"><h1 class="h1-2-lg">My Books</h1></a>
-            <a href="/new/<%= username %>"><button class="btn-2 flex item-center gap-5">Add <span class="text-2">+</span></button></a>
+            <div class="flex gap-10">
+                <a href="/new/<%= username %>"><button class="btn-2 flex item-center gap-5">Add <span class="text-2">+</span></button></a>
+                <a href="/logout"><button class="btn-5 flex item-center gap-5">Logout</button></a>
+            </div>
         </header>
         <% if(locals.books){ %>
             <h2 class="h2-2-lg mb-30"><%= name %>'s Collection</h2>

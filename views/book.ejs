@@ -3,7 +3,10 @@
     <div class="container-2">
         <header id="navbar">
             <a href="/home/<%= username %>"><h1 class="h1-2-lg">My Books</h1></a>
-            <a href="/edit/<%= username %>/<%= book.id %>"><button class="btn-2 flex item-center gap-5">Edit <span class="text-2">+</span></button></a>
+            <div class="flex gap-10">
+                <a href="/edit/<%= username %>/<%= book.id %>"><button class="btn-6 flex item-center gap-10 pad-10">Edit <img src="/images/edit.svg" alt="" class="icons"></button></a>
+                <a href="/delete/<%= username %>/<%= book.id %>" id="delete"><button class="btn-5 flex item-center gap-5">Delete</button></a>
+            </div>
         </header>
         <div class="flex-container mb-50">
             <img src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-L.jpg" alt="if image is not displaying then the isbn must be incorrect. Please edit it." class="img-l img-shadow">
@@ -26,5 +29,14 @@
             </div>
         </div>
     </div>
+    <script>
+        const del = document.querySelector("#delete");
+        del.addEventListener("click", (e) => {
+            const ch = confirm("Are you sure you want to delete this?")
+            if(!ch){
+                e.preventDefault();
+            }
+        })
+    </script>
 </body>
 <%- include('./partials/footer.ejs') %>

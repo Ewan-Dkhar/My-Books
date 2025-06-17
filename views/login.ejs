@@ -11,8 +11,14 @@
             <input type="password" name="password" id="password" class="input-box" required>
         </div>
         <a href="/signup" class="mb-30 text-sm">don't have an account yet?</a>
-        <button class="btn-1" type="submit">Login</button>
+        <button class="btn-1 mb-20" type="submit">Login</button>
+        <a href="/auth/google" class="no-line"><button class="btn-1 mb-20 flex item-center justify-center gap-10" type="button">
+            <img src="/images/google.svg" alt="" class="icons">
+            Sign in with Google
+        </button></a>
+        <% if(locals.error){ %>
+            <p class="text-sm red"><%= error %></p>
+        <% } %>
     </form>
-    
 </body>
 <%- include('./partials/footer.ejs') %>

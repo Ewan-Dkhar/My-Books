@@ -119,6 +119,9 @@
   .h1-1-lg{
     font-size: 3rem;
   }
+  .h2-1-lg{
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 600px){
@@ -133,5 +136,8 @@
   }
   .h1-1-lg{
     font-size: 2rem;
+  }
+  .h2-1-lg{
+    font-size: 1rem;
   }
 }

@@ -89,9 +89,17 @@
     #no-image{
         height:300px;
     }
+    #login-box{
+        padding: 30px 50px;
+        width: 500px;
+    }
 }
 @media (max-width: 600px){
     #navbar{
         align-items: center;
+    }
+    #login-box{
+        padding: 30px 50px;
+        width: 300px;
     }
 }
